@@ -13,6 +13,10 @@ socket.on('newMessage', function(message) {
   let li = jQuery('<li></li>');
   li.text(`${message.from}: ${message.text}`);
 
+  let timeStamp = jQuery('<p class="timeStamp"></p>');
+  timeStamp.text(message.createdAt);
+  li.append(timeStamp);
+
   jQuery('#messages').append(li);
 });
 
@@ -35,7 +39,10 @@ jQuery('#message-form').on('submit', function (e) {
     text: jQuery('[name=message]').val()
   }, function () {
 
-  })
+  });
+
+  jQuery('[name=message]').val("");
+
 });
 
 let locationButton = jQuery('#send-location');

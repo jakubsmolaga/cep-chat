@@ -15,15 +15,16 @@
   </div>
 
   <div class="chat__main">
-    <ol id="messages" class="chat__messages"></ol>
+    <div class="messages__box">
+      <ol id="messages" class="chat__messages"></ol>
+    </div>
 
     <div class="chat__footer">
       <form id="message-form">
         <input name="message" type="text" placeholder="Message"/>
         <button>Send</button>
+        <button id="send-location">Send Location</button>
       </form>
-
-      <button id="send-location">Send Location</button>
     </div>
   </div>
 
