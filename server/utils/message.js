@@ -11,7 +11,7 @@ let generateLocationMessage = (from, lat, lng) => {
   return {
     from,
     url,
-    createdAt: new Date().tiLocaleString()
+    createdAt: new Date().toLocaleString()
   };
 };
 

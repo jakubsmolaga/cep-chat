@@ -51,10 +51,11 @@ button {
   transition: background .3s ease;
   border-radius: 10px;
   box-shadow: 0px 5px 12px black;
+  max-height: 37px;
 }
 
 button:hover {
-  background: #1F4C69
+  background: rgb(200, 70, 0);
 }
 
 button:disabled {
@@ -163,15 +164,16 @@ button:disabled {
   flex-shrink: 0;
 }
 
-.chat__footer form {
-  flex-grow: 1;
-  display: flex
-}
-
-.chat__footer form * {
+.chat__footer * {
   margin-right: 5px;
   margin-left: 5px;
   margin-bottom: 20px;
+  height: auto;
+}
+
+.chat__footer form {
+  flex-grow: 1;
+  display: flex
 }
 
 .chat__footer input {
@@ -230,6 +232,6 @@ input {
     margin-bottom: 10px
   }
   .chat__footer button {
-    margin-right: 0
+    margin-right: 0;
   }
 }
