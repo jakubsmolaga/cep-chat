@@ -24,6 +24,7 @@ li, ul {
 }
 
 li {
+  box-shadow: 0px 2px 3px;
   float: left;
   width: 100%;
   font-weight: bold;
@@ -79,7 +80,7 @@ button:disabled {
 
 .centered-form__form {
   background: rgba(250, 128, 0, .9);
-  border-radius: 5px;
+  border-radius: 20px;
   padding: 0 20px;
   margin: 20px;
   width: 230px
@@ -218,7 +219,7 @@ input {
   box-shadow: 0px 5px 15px;
 }
 
-@media (max-width:600px) {
+@media (max-width:1000px) {
   * {
     font-size: 1rem
   }
@@ -234,4 +235,19 @@ input {
   .chat__footer button {
     margin-right: 0;
   }
+
+  .chat__main {
+    width: 100vw;
+    height: 100vh;
+    margin-right: 0px;
+  }
+}
+
+.admin__message {
+  background-color: rgba(0, 0, 0, 0);
+  font-size: 0.7rem;
+  box-shadow: 0px 0px 0px;
+}
+.admin__message *{
+  font-size: 0.7rem;
 }

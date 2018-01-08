@@ -4,6 +4,7 @@ const express = require('express');
 const socketIO = require('socket.io');
 
 const {generateMessage, generateLocationMessage} = require('./utils/message');
+const {isRealString} = require('./utils/validation');
 
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
@@ -15,14 +16,26 @@ app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
   console.log('new client connected');
+  let nickname;
+  let room;
 
-  socket.emit('newMessage', generateMessage('Admin', 'Welcome to cep chat!'));
+  socket.on('join', (params, callback) => {
+    if(!isRealString(params.nickname) || !isRealString(params.room)){
+      return callback('name and room are required');
+    }
 
-  socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined!'));
+    nickname = params.nickname;
+    room = params.room;
+    socket.join(room);
+
+    socket.emit('newMessage', generateMessage('Admin', 'Welcome to cep chat!'));
+    socket.broadcast.to(room).emit('newMessage', generateMessage('Admin', `${nickname} joined the room!`));
+    callback();
+  });
 
   socket.on('createMessage', (message , callback) => {
     console.log('Message created', message);
-    io.emit('newMessage', generateMessage(message.from, message.text));
+    io.to(room).emit('newMessage', generateMessage(nickname, message.text));
     callback('This is from the server');
   });
 
@@ -32,6 +45,7 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log('client disconnected');
+    socket.broadcast.to(room).emit('newMessage', generateMessage('Admin', `${nickname} left the room!`));
   })
 });
 

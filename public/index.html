@@ -4,32 +4,37 @@
 
 <head>
   <meta charset="utf-8">
+  <title>Join | cep-chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scallable=no">
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-<body class="chat">
+<body class="centered-form">
 
-  <div class="chat__sidebar">
-    <h3>People</h3>
-    <div id="users"></div>
+  <div class="centered-form__form">
+    <form action="chat.html" method="GET">
+      <div class="form-field">
+        <h3>Join cep chat!</h3>
+      </div>
+      <div class="form-field">
+        <label>Display name</label>
+        <input id="nickname_box" type="text" name="nickname" autofocus/>
+      </div>
+      <div class="form-field">
+        <label>Room name</label>
+        <input id="room_box" type="text" name="room"/>
+      </div>
+      <div class="form-field">
+        <button>Join</button>
+      </div>
+    </form>
+
   </div>
 
-  <div class="chat__main">
-    <div class="messages__box">
-      <ol id="messages" class="chat__messages"></ol>
-    </div>
 
-    <div class="chat__footer">
-      <form id="message-form">
-        <input name="message" type="text" placeholder="Message"/>
-        <button>Send</button>
-      </form>
-      <button id="send-location">Send Location</button>
-    </div>
-  </div>
 
   <script src="/socket.io/socket.io.js"></script>
-  <script src ="/js/libs/jquery-3.2.1.min.js"></script>
+  <script src="/js/libs/jquery-3.2.1.min.js"></script>
   <script src="/js/index.js"></script>
 </body>
 
