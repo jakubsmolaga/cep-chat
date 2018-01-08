@@ -3,5 +3,5 @@ let room_box = jQuery('#room_box');
 
 
 jQuery('form').on('submit', (e) => {
-  if(room == '') room_box.val('public');
+  if(room_box.val() == '') room_box.val('public');
 });
