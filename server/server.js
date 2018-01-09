@@ -16,7 +16,6 @@ app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
   console.log('new client connected');
-  let nickname;
   let room;
   let color;
 
@@ -24,30 +23,37 @@ io.on('connection', (socket) => {
     if(!isRealString(params.nickname) || !isRealString(params.room)){
       return callback('name and room are required');
     }
+    let roaster = io.of('/').adapter.rooms[params.room];
+    if(roaster){
+      for(id in roaster.sockets){
+        if(io.of('/').adapter.nsp.connected[id].nickname === params.nickname)
+          return callback('User with this name already exists in this room');
+      }
+    }
 
-    nickname = params.nickname;
+    socket.nickname = params.nickname;
     room = params.room;
     color = Math.floor(Math.random()*16777215).toString(16);
     socket.join(room);
 
     socket.emit('newMessage', generateMessage('Admin', 'Welcome to cep chat!'));
-    socket.broadcast.to(room).emit('newMessage', generateMessage('Admin', `${nickname} joined the room!`));
+    socket.broadcast.to(room).emit('newMessage', generateMessage('Admin', `${socket.nickname} joined the room!`));
     callback();
   });
 
   socket.on('createMessage', (message , callback) => {
     console.log('Message created', message);
-    io.to(room).emit('newMessage', generateMessage(nickname, message.text, color));
+    io.to(room).emit('newMessage', generateMessage(socket.nickname, message.text, color));
     callback('This is from the server');
   });
 
   socket.on('createLocationMessage', (coords) => {
-    io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
+    io.emit('newLocationMessage', generateLocationMessage(socket.nickname, coords.latitude, coords.longitude));
   });
 
   socket.on('disconnect', () => {
     console.log('client disconnected');
-    socket.broadcast.to(room).emit('newMessage', generateMessage('Admin', `${nickname} left the room!`));
+    socket.broadcast.to(room).emit('newMessage', generateMessage('Admin', `${socket.nickname} left the room!`));
   })
 });
 
