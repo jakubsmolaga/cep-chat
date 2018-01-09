@@ -27,6 +27,18 @@ socket.on('disconnect', function () {
   console.log('disconnected from server');
 });
 
+socket.on('users_update', function (users) {
+  console.log(users.nicknames);
+  let nicknames = users.nicknames;
+  jQuery('#users_online').html('');
+  for(i in nicknames){
+    let li = jQuery('<li></li>');
+    li.text(nicknames[i]);
+    li.css('text-shadow', `0px 0px 5px #${users.colors[i]}`);
+    jQuery('#users_online').append(li);
+  }
+});
+
 socket.on('newMessage', function(message) {
   console.log('New message', message);
   let tmp='';

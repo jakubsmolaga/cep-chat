@@ -251,3 +251,7 @@ input {
 .admin__message *{
   font-size: 0.7rem;
 }
+
+#users_online *{
+  box-shadow: 0px 2px 3px green;
+}
