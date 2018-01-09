@@ -33,6 +33,7 @@ socket.on('newMessage', function(message) {
   if(message.from === 'Admin') tmp = ' class="admin__message"';
   let li = jQuery(`<li${tmp}></li>`);
   li.text(`${message.from}: ${message.text}`);
+  li.css('box-shadow', `0px 2px 3px #${message.color}`);
 
   let timeStamp = jQuery('<p class="timeStamp"></p>');
   timeStamp.text(message.createdAt);
@@ -71,6 +72,8 @@ jQuery('#message-form').on('submit', function (e) {
 let locationButton = jQuery('#send-location');
 
 locationButton.on('click', function () {
+  jQuery('li').css('box-shadow', '0px 2px 3px green');
+
   if (!navigator.geolocation) {
     return alert('Geolocation is not supported by your browser!');
   }

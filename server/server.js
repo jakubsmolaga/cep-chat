@@ -18,6 +18,7 @@ io.on('connection', (socket) => {
   console.log('new client connected');
   let nickname;
   let room;
+  let color;
 
   socket.on('join', (params, callback) => {
     if(!isRealString(params.nickname) || !isRealString(params.room)){
@@ -26,6 +27,7 @@ io.on('connection', (socket) => {
 
     nickname = params.nickname;
     room = params.room;
+    color = Math.floor(Math.random()*16777215).toString(16);
     socket.join(room);
 
     socket.emit('newMessage', generateMessage('Admin', 'Welcome to cep chat!'));
@@ -35,7 +37,7 @@ io.on('connection', (socket) => {
 
   socket.on('createMessage', (message , callback) => {
     console.log('Message created', message);
-    io.to(room).emit('newMessage', generateMessage(nickname, message.text));
+    io.to(room).emit('newMessage', generateMessage(nickname, message.text, color));
     callback('This is from the server');
   });
 

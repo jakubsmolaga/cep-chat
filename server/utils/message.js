@@ -1,8 +1,9 @@
-let generateMessage = (from, text) => {
+let generateMessage = (from, text, color) => {
   return {
     from,
     text,
-    createdAt: new Date().toLocaleString()
+    createdAt: new Date().toLocaleString(),
+    color
   };
 };
 
