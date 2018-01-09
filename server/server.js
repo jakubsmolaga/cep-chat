@@ -23,12 +23,15 @@ io.on('connection', (socket) => {
     if(!isRealString(params.nickname) || !isRealString(params.room)){
       return callback('name and room are required');
     }
-    let roaster = io.of('/').adapter.rooms[params.room];
+    let nickname = params.nickname.trim();
+    room = params.room.trim();
+    if(nickname.length > 20) return callback('name cant have more than 20 characters');
+    let roaster = io.of('/').adapter.rooms[room];
     let nicknames = [];
     let colors = [];
     if(roaster){
       for(id in roaster.sockets){
-        if(io.of('/').adapter.nsp.connected[id].nickname === params.nickname)
+        if(io.of('/').adapter.nsp.connected[id].nickname === nickname)
           return callback('User with this name already exists in this room');
       }
       for(id in roaster.sockets){
@@ -37,10 +40,9 @@ io.on('connection', (socket) => {
       }
     }
 
-    nicknames.push(params.nickname);
+    nicknames.push(nickname);
     console.log(nicknames);
-    socket.nickname = params.nickname;
-    room = params.room;
+    socket.nickname = nickname;
     color = Math.floor(Math.random()*16777215).toString(16);
     socket.color = color;
     colors.push(color);
